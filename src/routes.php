@@ -1,22 +1,26 @@
 <?php
 
-use Slim\Http\Request;
-use Slim\Http\Response;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+
+use Slim\Views\PhpRenderer;
+use Monolog\Logger;
 
 // Routes
 
-$app->get('/[{name}]', function (Request $request, Response $response, array $args) {
+$app->get('/[{name}]', function (ServerRequestInterface $request, ResponseInterface $response, PhpRenderer $renderer, Logger $logger) {
     // Sample log message
-    $this->logger->info("Slim-Skeleton '/' route");
+    $logger->info("Slim-Skeleton '/' route");
 
     // Render index view
-    return $this->renderer->render($response, 'index.phtml', $args);
+    return $renderer->render($response, 'index.phtml', ['name' => $request->getAttribute('route')->getArgument('name')]);
 });
 
 $app->group('/api', function () use($app) {
-    $app->get('/[{name}]', function (Request $request, Response $response) {
+    $app->get('/{name}', function (ServerRequestInterface $request, ResponseInterface $response) {
+        var_dump($request->getAttribute('route')->getArgument('name'));
         return json_encode([
-            'greeting' => 'Hello '.$request->getAttribute('name').'!'
+            'greeting' => 'Hello '.$request->getAttribute('route')->getArgument('name').'!'
         ]);
     });
 });

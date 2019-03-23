@@ -1,4 +1,10 @@
 <?php
+
+if(file_exists(__DIR__ . '/../.env')){
+    $env = \Dotenv\Dotenv::create(__DIR__ . '/../');
+    $env->load();
+}
+
 return [
     'settings' => [
         'displayErrorDetails' => true, // set to false in production
@@ -32,7 +38,7 @@ return [
                 'user' => getenv('DB_USERNAME'),
                 'password' => getenv('DB_PASSWORD'),
                 'port' => getenv('DB_PORT'),
-                'charset' => 'utf-8',
+                'charset' => 'utf8',
             ]
         ]
     ],

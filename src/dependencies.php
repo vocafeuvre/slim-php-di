@@ -41,7 +41,7 @@ return [
         );
 
         $config->setMetadataDriverImpl(
-            new AnnotatationDriver(
+            new AnnotationDriver(
                 new AnnotationReader,
                 $c->get('settings')['doctrine']['metadata_dirs']
             )

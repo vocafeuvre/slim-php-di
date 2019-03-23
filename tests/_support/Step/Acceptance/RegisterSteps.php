@@ -64,6 +64,6 @@ class RegisterSteps extends \AcceptanceTester
     */
     public function iShouldSeeTheResponseMessageAs($arg1)
     {
-        $this->seeResponseContains('{"result": "'.$arg1.'"');
+        $this->seeResponseContainsJson(['result' => $arg1]);
     }
 }

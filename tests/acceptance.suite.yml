@@ -7,6 +7,12 @@
 actor: AcceptanceTester
 modules:
     enabled:
-        - PhpBrowser:
-            url: http://localhost/myapp
+        - REST:
+            url: http://localhost:8080/api
+            depends: PhpBrowser
+            part: Json
         - \Helper\Acceptance
+gherkin:
+    contexts:
+        default:
+            - \Step\Acceptance\RegisterSteps

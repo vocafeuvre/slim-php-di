@@ -1,14 +1,13 @@
 {
-    "name": "slim/slim-skeleton",
-    "description": "A Slim Framework skeleton application for rapid development",
-    "keywords": ["microframework", "rest", "router", "psr7"],
-    "homepage": "http://github.com/slimphp/Slim-Skeleton",
+    "name": "slim-php-di",
+    "description": "REST API Boilerplate using Slim 3, PHP-DI, and Doctrine. Tests are done with Codeception and Behat.",
+    "keywords": ["microframework", "rest", "router", "psr7", "slim", "php-di", "doctrine", "codeception"],
+    "homepage": "https://github.com/vocafeuvre/slim-php-di",
     "license": "MIT",
     "authors": [
         {
-            "name": "Josh Lockhart",
-            "email": "info@joshlockhart.com",
-            "homepage": "http://www.joshlockhart.com/"
+            "name": "vocafeuvre",
+            "email": "hirafura96@gmail.com"
         }
     ],
     "require": {

@@ -9,6 +9,8 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\ApcCache;
 
+use App\Service\AuthService;
+
 return [
     // add Monolog as a dependency
     \Monolog\Logger::class => function (ContainerInterface $c){
@@ -54,5 +56,10 @@ return [
             $c->get('settings')['doctrine']['connection'],
             $config
         );
+    },
+
+    // add our app's own services here
+    AuthService::class => function (EntityManager $em) {
+        return new AuthService($em);
     }
 ];

@@ -11,6 +11,8 @@ use Doctrine\Common\Cache\ApcCache;
 
 use App\Service\AuthService;
 
+use App\Helper\Deserializer;
+
 return [
     // add Monolog as a dependency
     \Monolog\Logger::class => function (ContainerInterface $c){
@@ -61,5 +63,10 @@ return [
     // add our app's own services here
     AuthService::class => function (EntityManager $em) {
         return new AuthService($em);
+    },
+
+    // add our app's helpers here
+    Deserializer::class => function (ContainerInterface $c) {
+        return new Deserializer();
     }
 ];

@@ -4,13 +4,16 @@ use Psr\Container\ContainerInterface;
 
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\ApcCache;
 
 use App\Service\AuthService;
+use App\Repository\UserRepository;
 
+use App\Transformer\UserTransformer;
 use App\Helper\Deserializer;
 
 return [
@@ -61,12 +64,22 @@ return [
     },
 
     // add our app's own services here
-    AuthService::class => function (EntityManager $em) {
-        return new AuthService($em);
+    AuthService::class => function (UserRepository $repo, UserTransformer $transformer) {
+        return new AuthService($repo, $transformer);
+    },
+
+    // add our app's repositories here
+    UserRepository::class => function (EntityManager $em) {
+        return $em->getRepository('App\Entity\User');
     },
 
     // add our app's helpers here
     Deserializer::class => function (ContainerInterface $c) {
         return new Deserializer();
+    },
+
+    // add our app's transformers here
+    UserTransformer::class => function (ContainerInterface $c) {
+        return new UserTransformer();
     }
 ];

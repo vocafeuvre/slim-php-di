@@ -2,60 +2,71 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity @Table(name="users")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="users")
  */
 class User {
     /**
-     * @Id @Column(type="integer") @GeneratedValue
+     * @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue
      */
     protected $id;
 
     /**
-     * @Column(type="string)
+     * @ORM\Column(type="string")
      */
     protected $user_name;
 
     /**
-     * @Column(type="string)
+     * @ORM\Column(type="string")
      */
     protected $password;
 
     /**
-     * @Column(type="string)
+     * @ORM\Column(type="string")
      */
     protected $first_name;
 
     /**
-     * @Column(type="string)
+     * @ORM\Column(type="string")
      */
     protected $last_name;
 
     public function getId(){
-        return $this->$id;
+        return $this->id;
     }
 
     public function getUserName(){
-        return $this->$user_name;
+        return $this->user_name;
+    }
+
+    public function getPassword(){
+        return $this->password;
     }
 
     public function getFirstName(){
-        return $this->$first_name;
+        return $this->first_name;
     }
 
     public function getLastName(){
-        return $this->$last_name;
+        return $this->last_name;
     }
 
     public function setUserName($value){
-        $this->$user_name = $value;
+        $this->user_name = $value;
+    }
+
+    public function setPassword($value){
+        $this->password = $value;
     }
 
     public function setFirstName($value){
-        $this->$first_name = $value;
+        $this->first_name = $value;
     }
 
     public function setLastName($value){
-        $this->$last_name = $value;
+        $this->last_name = $value;
     }
 }

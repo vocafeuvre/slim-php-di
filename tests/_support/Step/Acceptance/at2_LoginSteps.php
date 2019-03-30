@@ -44,6 +44,6 @@ class at2_LoginSteps extends \AcceptanceTester
     */
     public function iShouldSeeBearerTokenAsNotEmpty()
     {
-        // $I->seeResponseJsonMatchesXpath('//token');
+        $this->seeResponseJsonMatchesXpath('//data/token');
     }
 }

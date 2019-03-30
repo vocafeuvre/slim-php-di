@@ -1,7 +1,7 @@
 <?php
 namespace Step\Acceptance;
 
-class LoginSteps extends \AcceptanceTester
+class at2_LoginSteps extends \AcceptanceTester
 {
     /**
      * @Given I have a username with a value of :arg1 and a password with a value of :arg2
@@ -18,7 +18,7 @@ class LoginSteps extends \AcceptanceTester
     public function iLogin()
     {
         $this->sendPOST('/auth/login', [
-            'username' => $this->username,
+            'user_name' => $this->username,
             'password' => $this->password
         ]);
     }
@@ -28,7 +28,7 @@ class LoginSteps extends \AcceptanceTester
     */
     public function iShouldSeeFirstNameAs($arg1)
     {
-        $this->seeResponseContainsJson(['first_name' => $arg1]);
+        $this->seeResponseContainsJson(array('first_name' => $arg1));
     }
 
    /**
@@ -36,7 +36,7 @@ class LoginSteps extends \AcceptanceTester
     */
     public function iShouldSeeLastNameAs($arg1)
     {
-        $this->seeResponseContainsJson(['last_name' => $arg1]);
+        $this->seeResponseContainsJson(array('last_name' => $arg1));
     }
 
    /**
@@ -44,7 +44,6 @@ class LoginSteps extends \AcceptanceTester
     */
     public function iShouldSeeBearerTokenAsNotEmpty()
     {
-        
-        $this->seeResponseContainsJson(['token']);
+        // $I->seeResponseJsonMatchesXpath('//token');
     }
 }

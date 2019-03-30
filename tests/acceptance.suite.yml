@@ -15,5 +15,5 @@ modules:
 gherkin:
     contexts:
         default:
-            - \Step\Acceptance\RegisterSteps
-            - \Step\Acceptance\LoginSteps
+            - \Step\Acceptance\at1_RegisterSteps
+            - \Step\Acceptance\at2_LoginSteps

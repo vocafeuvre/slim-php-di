@@ -9,5 +9,5 @@ Feature: register
     And I have a last name with value of "feuvre"
     And I have a password with value of "123"
     When I register
-    Then I should see the response status code as "201"
-    And I should see the response message as "Account Created!"
+    Then I should see the response status code as "200"
+    And I should see the response containing all previous values

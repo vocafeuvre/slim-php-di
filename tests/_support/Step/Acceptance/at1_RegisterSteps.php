@@ -4,14 +4,14 @@ namespace Step\Acceptance;
 
 use Codeception\Util\Fixtures;
 
-class RegisterSteps extends \AcceptanceTester
+class at1_RegisterSteps extends \AcceptanceTester
 {
     /**
      * @Given I have a username with value of :arg1
      */
     public function iHaveAUsernameWithValueOf($arg1)
     {
-        Fixtures::add('username', $arg1);
+        $this->user_name = $arg1;
     }
 
    /**
@@ -19,7 +19,7 @@ class RegisterSteps extends \AcceptanceTester
     */
     public function iHaveAFirstNameWithValueOf($arg1)
     {
-        Fixtures::add('first_name', $arg1);
+        $this->first_name = $arg1;
     }
 
    /**
@@ -27,7 +27,7 @@ class RegisterSteps extends \AcceptanceTester
     */
     public function iHaveALastNameWithValueOf($arg1)
     {
-        Fixtures::add('last_name', $arg1);
+        $this->last_name = $arg1;
     }
 
    /**
@@ -35,7 +35,7 @@ class RegisterSteps extends \AcceptanceTester
     */
     public function iHaveAPasswordWithValueOf($arg1)
     {
-        Fixtures::add('password', $arg1);
+        $this->password = $arg1;
     }
 
    /**
@@ -44,10 +44,10 @@ class RegisterSteps extends \AcceptanceTester
     public function iRegister()
     {
         $this->sendPOST('/auth/register', [
-            'username' => Fixtures::get('username'),
-            'first_name' => Fixtures::get('first_name'),
-            'last_name' => Fixtures::get('last_name'),
-            'password' => Fixtures::get('password')
+            'user_name' => $this->user_name,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'password' => $this->password
         ]);
     }
 
@@ -60,10 +60,12 @@ class RegisterSteps extends \AcceptanceTester
     }
 
    /**
-    * @Then I should see the response message as :arg1
+    * @Then I should see the response containing all previous values
     */
-    public function iShouldSeeTheResponseMessageAs($arg1)
+    public function iShouldSeeTheResponseContainingAllPreviousValues()
     {
-        $this->seeResponseContainsJson(['result' => $arg1]);
+        $this->seeResponseContainsJson(array('user_name' => $this->user_name));
+        $this->seeResponseContainsJson(array('first_name' => $this->first_name));
+        $this->seeResponseContainsJson(array('last_name' => $this->last_name));
     }
 }

@@ -64,8 +64,8 @@ return [
     },
 
     // add our app's own services here
-    AuthService::class => function (UserRepository $repo, UserTransformer $transformer) {
-        return new AuthService($repo, $transformer);
+    AuthService::class => function (ContainerInterface $c, UserRepository $repo, UserTransformer $transformer) {
+        return new AuthService($repo, $transformer, $c->get('settings')['jwt']['secret']);
     },
 
     // add our app's repositories here

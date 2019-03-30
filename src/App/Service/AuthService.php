@@ -8,13 +8,18 @@ use App\ModelData\UserData;
 use App\ModelData\AuthData;
 use App\Helper\Messages;
 
+use \Firebase\JWT\JWT;
+
 class AuthService {
     private $repo;
     private $transformer;
+    private $jwtSecret;
 
-    public function __construct(UserRepository $repo, UserTransformer $transformer){
+    public function __construct(UserRepository $repo, UserTransformer $transformer, string $jwtSecret){
         $this->repo = $repo;
         $this->transformer = $transformer;
+
+        $this->jwtSecret = $jwtSecret;
     }
 
     public function register(UserData $data){
@@ -36,7 +41,18 @@ class AuthService {
             ];
         }
 
+        $now = new \DateTime();
+        $future = new \DateTime("now +1 hours");
+
+        $token = JWT::encode([
+            'id' => $user->getId(),
+            'user_name' => $user->getUserName(),
+            'iat' => $now->getTimestamp(),
+            'exp' => $future->getTimestamp()
+        ], $this->jwtSecret, "HS256");
+
         return [
+            'token' => $token,
             'user' => $this->transformer->transform($user)
         ];
     }

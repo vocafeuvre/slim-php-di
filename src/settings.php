@@ -1,4 +1,10 @@
 <?php
+
+if(file_exists(__DIR__ . '/../.env')){
+    $env = \Dotenv\Dotenv::create(__DIR__ . '/../');
+    $env->load();
+}
+
 return [
     'settings' => [
         'displayErrorDetails' => true, // set to false in production
@@ -8,6 +14,12 @@ return [
         'responseChunkSize' => 4096,
         'determineRouteBeforeAppMiddleware' => false,
         'routerCacheFile' => false,
+        'jwt' => [
+            'path' => ['/api'],
+            'ignore' => ['/api/auth'],
+            'secret' => getenv('JWT_SECRET'),
+            'relaxed' => ['localhost'],
+        ],
 
         // Renderer settings
         'renderer' => [
@@ -32,7 +44,7 @@ return [
                 'user' => getenv('DB_USERNAME'),
                 'password' => getenv('DB_PASSWORD'),
                 'port' => getenv('DB_PORT'),
-                'charset' => 'utf-8',
+                'charset' => 'utf8',
             ]
         ]
     ],

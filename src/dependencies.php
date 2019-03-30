@@ -4,10 +4,17 @@ use Psr\Container\ContainerInterface;
 
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\ApcCache;
+
+use App\Service\AuthService;
+use App\Repository\UserRepository;
+
+use App\Transformer\UserTransformer;
+use App\Helper\Deserializer;
 
 return [
     // add Monolog as a dependency
@@ -41,7 +48,7 @@ return [
         );
 
         $config->setMetadataDriverImpl(
-            new AnnotatationDriver(
+            new AnnotationDriver(
                 new AnnotationReader,
                 $c->get('settings')['doctrine']['metadata_dirs']
             )
@@ -54,5 +61,25 @@ return [
             $c->get('settings')['doctrine']['connection'],
             $config
         );
+    },
+
+    // add our app's own services here
+    AuthService::class => function (ContainerInterface $c, UserRepository $repo, UserTransformer $transformer) {
+        return new AuthService($repo, $transformer, $c->get('settings')['jwt']['secret']);
+    },
+
+    // add our app's repositories here
+    UserRepository::class => function (EntityManager $em) {
+        return $em->getRepository('App\Entity\User');
+    },
+
+    // add our app's helpers here
+    Deserializer::class => function (ContainerInterface $c) {
+        return new Deserializer();
+    },
+
+    // add our app's transformers here
+    UserTransformer::class => function (ContainerInterface $c) {
+        return new UserTransformer();
     }
 ];

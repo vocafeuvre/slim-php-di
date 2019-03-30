@@ -14,6 +14,12 @@ return [
         'responseChunkSize' => 4096,
         'determineRouteBeforeAppMiddleware' => false,
         'routerCacheFile' => false,
+        'jwt' => [
+            'path' => ['/api'],
+            'ignore' => ['/api/auth'],
+            'secret' => getenv('JWT_SECRET'),
+            'relaxed' => ['localhost'],
+        ],
 
         // Renderer settings
         'renderer' => [
